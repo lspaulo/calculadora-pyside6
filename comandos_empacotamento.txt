@@ -1,0 +1,146 @@
+================================================================================
+                    COMANDOS PARA EMPACOTAR A CALCULADORA
+================================================================================
+
+📁 ESTRUTURA DO PROJETO:
+================================================================================
+/home/lspaulo/Documents/Estudos/Python/Pyside6/
+├── Calculadora/           # Código fonte
+│   ├── main.py
+│   ├── buttons.py
+│   ├── display.py
+│   ├── info.py
+│   ├── main_window.py
+│   ├── variables.py
+│   ├── utils.py
+│   ├── styles.py
+│   └── files/
+│       └── logo.png       # Ícone da aplicação
+├── .env/                  # Ambiente virtual (Python 3.14)
+└── __localCode/           # (Opcional) Pasta para builds
+    ├── dist/
+    ├── build/
+    └── Calculadora.spec
+
+
+================================================================================
+✅ COMANDO BÁSICO (RECOMENDADO)
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile \
+  --add-data="Calculadora/files/:files/" \
+  --noconsole --clean --log-level=WARN \
+  Calculadora/main.py
+
+# O executável será criado em: dist/Calculadora
+
+
+================================================================================
+✅ COMANDO COM PATHS PERSONALIZADOS
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile \
+  --add-data="$(pwd)/Calculadora/files/:files/" \
+  --noconsole --clean --log-level=WARN \
+  --distpath="$(pwd)/__localCode/dist" \
+  --workpath="$(pwd)/__localCode/build" \
+  --specpath="$(pwd)/__localCode" \
+  $(pwd)/Calculadora/main.py
+
+# O executável será criado em: __localCode/dist/Calculadora
+
+
+================================================================================
+✅ COMANDO COM VERBOSE (PARA DEBUG)
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile \
+  --add-data="Calculadora/files/:files/" \
+  --noconsole --clean --log-level=DEBUG \
+  Calculadora/main.py
+
+
+================================================================================
+✅ COMANDO SEM CONSOLE (APENAS WINDOWS/MAC - IGNORADO NO LINUX)
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile \
+  --add-data="Calculadora/files/:files/" \
+  --icon="Calculadora/files/logo.png" \
+  --noconsole --clean --log-level=WARN \
+  Calculadora/main.py
+
+# ⚠️ NOTA: O parâmetro --icon só funciona no Windows e macOS
+# No Linux, o ícone deve ser configurado via código (resource_path)
+
+
+================================================================================
+✅ COMANDO PARA WINDOWS (executar no PowerShell)
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile `
+  --add-data="Calculadora/files;files/" `
+  --icon="Calculadora/files/logo.png" `
+  --noconsole --clean --log-level=WARN `
+  Calculadora/main.py
+
+# ⚠️ NOTA: No Windows, use `;` como separador no --add-data
+# O executável será: dist/Calculadora.exe
+
+
+================================================================================
+✅ COMANDO PARA GERAR APENAS O .SPEC FILE
+================================================================================
+pyi-makespec --name="Calculadora" --onefile \
+  --add-data="Calculadora/files/:files/" \
+  --noconsole \
+  Calculadora/main.py
+
+# Depois edite o arquivo .spec e execute:
+pyinstaller Calculadora.spec
+
+================================================================================
+✅ COMANDO PARA GERAR TUDO DENTRO DE UMA PASTA CHAMADA __localCode
+================================================================================
+pyinstaller --name="Calculadora" --noconfirm --onefile \
+  --add-data="$(pwd)/Calculadora/files/:files/" \
+  --noconsole --clean --log-level=WARN \
+  --distpath="$(pwd)/__localCode/dist" \
+  --workpath="$(pwd)/__localCode/build" \
+  --specpath="$(pwd)/__localCode" \
+  "$(pwd)/Calculadora/main.py"
+  
+================================================================================
+📝 EXPLICAÇÃO DOS PARÂMETROS
+================================================================================
+
+--name="Calculadora"     # Nome do executável
+--noconfirm              # Sobrescreve arquivos sem perguntar
+--onefile                # Gera um único arquivo executável
+--add-data               # Inclui arquivos adicionais (format: origem:destino)
+--noconsole              # Executa sem janela de console (Windows)
+--clean                  # Limpa arquivos temporários antes de buildar
+--log-level=WARN         # Nível de log (DEBUG, INFO, WARN, ERROR)
+--icon                   # Ícone do executável (Windows/macOS)
+--distpath               # Onde salvar o executável final
+--workpath               # Onde salvar arquivos temporários de build
+--specpath               # Onde salvar o arquivo .spec
+
+
+================================================================================
+🔧 CÓDIGO NECESSÁRIO PARA O ÍCONE FUNCIONAR (main.py)
+================================================================================
+
+Adicione esta função no início do seu main.py:
+
+```python
+import sys
+import os
+
+def resource_path(relative_path):
+    \"\"\"Obtém o caminho absoluto do recurso, funciona em dev e no executável\"\"\"
+    try:
+        base_path = sys._MEIPASS  # PyInstaller cria esta variável
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+# Depois use assim no código:
+icon_path = resource_path(str(WINDOW_ICON_PATH))
+icon = QIcon(icon_path)
+window.setWindowIcon(icon)

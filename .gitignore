@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+
+# Ambiente virtual
+.env/
+venv/
+.venv/
+ENV/
+
+# PyInstaller (executável gerado)
+dist/
+build/
+*.spec
+
+# IDE e sistema
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+
+# Arquivos do sistema operacional
+Thumbs.db
+.DS_Store
