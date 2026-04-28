@@ -25,7 +25,7 @@ Calculadora completa desenvolvida com **Python** e **PySide6** (Qt for Python). 
 
 ## 🎬 Demonstração
 
-![Calculadora em execução](files/demo_calculadora.png)
+![Calculadora em execução](https://img.icons8.com/fluency/96/calculator.png)
 
 > 🎥 Vídeo de demonstração disponível na [publicação do LinkedIn](https://www.linkedin.com/posts/luis-paulo-santos_python-pyside6-analisededados-ugcPost-7454695175840301056--JsM?utm_source=share&utm_medium=member_desktop&rcm=ACoAABBLGwgBe7YsJ9_ZcXCAA5cSzBR3zOFoKTU)
 
