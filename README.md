@@ -31,7 +31,7 @@ Calculadora completa desenvolvida com **Python** e **PySide6** (Qt for Python). 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/SEU_USUARIO/calculadora-pyside6.git
+git clone https://github.com/lspaulo/calculadora-pyside6.git
 
 # Entre na pasta
 cd calculadora-pyside6
